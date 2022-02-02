@@ -2,6 +2,12 @@
 
 == Development
 
+=== Environment
+
+==== Start
+
+[source,bash]
+----
 minikube start --vm=true
 kubectl config use-context minikube
 kubectl get nodes
@@ -10,14 +16,68 @@ minikube addons enable ingress
 minikube addons enable ingress-dns
 minikube addons enable metrics-server
 minikube addons enable dashboard
+echo -e "Launch the dashboard:"
+minikube dashboard
+----
+
+==== Configure DNS
+
+[source,bash]
+----
 echo -e "minikube ip:"
 minikube ip
-#echo -e "Added printed ip and url to /etc/hosts e.g. '172.16.46.27 helloworld.test'"
-#echo -e "Launch the dashboard"
 sudo mkdir -p /etc/resolver
 sudo vi /etc/resolver/minikube-test
   domain test
   nameserver 172.16.46.149
   search_order 1
   timeout 5
-minikube dashboard
+#echo -e "Alternative: Added printed ip and url to /etc/hosts e.g. '172.16.46.149 httpenv.test'"
+----
+
+* https://minikube.sigs.k8s.io/docs/handbook/addons/ingress-dns/
+
+==== Stop
+
+[source,bash]
+----
+minikube stop
+----
+
+==== Delete
+
+[source,bash]
+----
+minikube delete
+----
+
+=== Chart
+
+==== Test
+
+[source,bash]
+----
+helm template -f values-dev.yaml httpenv .
+----
+
+==== Install
+
+[source,bash]
+----
+helm install -f values-dev.yaml --create-namespace --namespace httpenv-dev httpenv .
+----
+
+==== Upgrade
+
+[source,bash]
+----
+helm upgrade -f values-dev.yaml --namespace httpenv-dev httpenv .
+#helm upgrade -f values-dev.yaml --namespace httpenv-dev --version 1.x.x httpenv .
+----
+
+==== Uninstall
+
+[source,bash]
+----
+helm uninstall --namespace httpenv-dev httpenv .
+----

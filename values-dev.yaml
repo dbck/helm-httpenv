@@ -1,0 +1,10 @@
+image:
+  repository: dbck/httpenv
+  tag: 1.0.0
+ingress:
+  enabled: true
+  hosts:
+    - host: httpenv.test
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
