@@ -1,0 +1,23 @@
+= Helm chart httpenv
+
+== Development
+
+minikube start --vm=true
+kubectl config use-context minikube
+kubectl get nodes
+minikube addons list
+minikube addons enable ingress
+minikube addons enable ingress-dns
+minikube addons enable metrics-server
+minikube addons enable dashboard
+echo -e "minikube ip:"
+minikube ip
+#echo -e "Added printed ip and url to /etc/hosts e.g. '172.16.46.27 helloworld.test'"
+#echo -e "Launch the dashboard"
+sudo mkdir -p /etc/resolver
+sudo vi /etc/resolver/minikube-test
+  domain test
+  nameserver 172.16.46.149
+  search_order 1
+  timeout 5
+minikube dashboard
