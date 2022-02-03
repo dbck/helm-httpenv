@@ -8,6 +8,7 @@
 
 [source,bash]
 ----
+# Advanced config: minikube start --vm=true --driver=hyperkit --cpus=4 --memory=8G --disk-size=40G
 minikube start --vm=true
 kubectl config use-context minikube
 kubectl get nodes
